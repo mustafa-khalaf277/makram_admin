@@ -221,7 +221,7 @@ export default function Home() {
         <IoMdAdd />
       </button>
       {
-      showForm && <AddForm setShowForm={setShowForm} setLoader={setLoader} />
+      showForm && <AddForm exams={exams} setShowForm={setShowForm} setLoader={setLoader} />
 
       }
       {data && openExamData && <ExamData setOpenExamData={setOpenExamData}

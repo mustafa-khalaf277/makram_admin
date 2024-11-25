@@ -16,31 +16,22 @@ import {
 
 
 export default function AddForm( {
-  setShowForm, setLoader
+  setShowForm, setLoader, exams
 }) {
 
   const [courses,
     setCourses] = useState([])
-  const [exams,
-    setExams] = useState([])
-
+  
   useEffect(()=> {
     try {
-      Axios(`${import.meta.env.VITE_BACKEND_URL}/admin/all_courses_for_select.php`).then(e=>
+      Axios(`${import.meta.env.VITE_BACKEND_URL}/admin/all_courses_for_select.php`).then(e =>
         {
           e.status == 200? setCourses(e.data): ErrorMessage("لقد حدث خطأ")
         })
     }catch(e) {
       ErrorMessage("لقد حدث خطأ")
     }
-    try {
-      Axios(`${import.meta.env.VITE_BACKEND_URL}/admin/all_exams_for_select.php`).then(e =>
-        {
-          e.status == 200? setExams(e.data): ErrorMessage("لقد حدث خطأ")
-        })
-    }catch(e) {
-      ErrorMessage("لقد حدث خطأ")
-    }
+  
   }, [])
   const HandleSubmitForm = (e)=> {
     e.preventDefault()
