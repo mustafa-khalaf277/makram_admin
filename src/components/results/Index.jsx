@@ -49,7 +49,13 @@ export default function Index() {
 
   const HandleChangePage = (id)=> {
     setSearchParams({
-      page: id
+      page: id,
+      order_by: searchParams.get("order_by")?searchParams.get("order_by"): "id",
+      order_method:
+      searchParams.get("order_method")?searchParams.get("order_method"): "DESC",
+      q: searchParams.get("q")?searchParams.get("q"): ""
+
+
     })
   }
 
@@ -274,8 +280,8 @@ export default function Index() {
         </div>
         <p className="text-slate-600">
           صفحه <strong className="text-slate-800">
-            
-            <select  ref={select} onChange={e=> HandleChangePage(e.target.value)} className="outline-0 mx-2">
+
+            <select ref={select} onChange={e=> HandleChangePage(e.target.value)} className="outline-0 mx-2">
             </select>
           </strong>
           من&nbsp;<strong className="text-slate-800">{Math.ceil(data.total
