@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  font-family: "Baloo Bhaijaan 2", sans-serif;
+  background:#f4f4f4;
+}
+
+@layer base{
+  .input{
+    @apply block py-2.5 px-0 w-full sm:text-lg
+            placeholder:text-right bg-gray-100 px-1
+            border-0 border-b-2 border-gray-300 placeholder:text-gray-900
+            appearance-none text-black border-gray-600
+            focus:border-blue-500 focus:outline-none focus:ring-0
+            focus:border-blue-600;
+  }
+ .select{
+    @apply bg-gray-50 border
+border-gray-300 text-gray-900 text-lg outline-0 rounded-lg focus:ring-blue-500
+focus:border-blue-500 block w-full p-2.5;
+  }
+  
+}

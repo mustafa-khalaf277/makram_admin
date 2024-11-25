@@ -1,0 +1,7 @@
+export {default as Home} from "./Home"
+export {default as Exam} from "./Exam"
+export {default as EditQuestion} from "./EditQuestion.jsx"
+export {default as Results} from "./Results.jsx"
+export {default as Result} from "./Result.jsx"
+export {default as Correction} from "./Correction.jsx"
+export {default as Sounds} from "./Sounds.jsx"
