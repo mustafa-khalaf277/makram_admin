@@ -72,8 +72,8 @@ export default function Home() {
       page: id
     })
   }
-  
- useEffect(()=> {
+
+  useEffect(()=> {
     try {
       Axios(`${import.meta.env.VITE_BACKEND_URL}/admin/all_exams_for_select.php`).then(e =>
         {
@@ -83,7 +83,7 @@ export default function Home() {
       ErrorMessage("لقد حدث خطأ")
     }
   }, [])
- 
+
   const selectOptions = []
 
 
@@ -243,28 +243,28 @@ export default function Home() {
                 <th scope="col" className="px-6 py-3 ">
                   الامتحان
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell">
                   الكورس
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell">
                   عدد الاسئله
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell">
                   دخول
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell">
                   النتائج
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell">
                   تصحيح
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell ">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell ">
                   تعديل
                 </th>
-                <th scope="col" className="px-6 py-3 hidden sm:table-cell">
+                <th scope="col" className="px-6 py-3 hidden md:table-cell">
                   حذف
                 </th>
-                <th className="px-6 py-3 sm:hidden ">
+                <th className="px-6 py-3 md:hidden ">
                   معلومات
                 </th>
 
@@ -277,25 +277,25 @@ export default function Home() {
                     <td className="px-6 py-4 ">
                       {item.exam_title}
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell">
+                    <td className="px-6 py-4 hidden md:table-cell">
                       {item.title}
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell">
+                    <td className="px-6 py-4 hidden md:table-cell">
                       {item.questions_count}
                     </td>
-                    <td className="px-6 py-3 hidden sm:table-cell">
+                    <td className="px-6 py-3 hidden md:table-cell">
                       <Link to={`/exam/${item.id}`} className="rounded text-blue-500 text-3xl flex justify-center"><RxEnter
                         /></Link>
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell">
+                    <td className="px-6 py-4 hidden md:table-cell">
                       <Link to={`/results/${item.id}`} className="rounded text-gary-500
                         text-3xl flex justify-center"><BiLinkExternal /></Link>
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell">
+                    <td className="px-6 py-4 hidden md:table-cell">
                       <Link to={`/exam/${item.id}/correction`} className="rounded text-green-500 text-3xl flex
                         justify-center"><RiEditFill /></Link>
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell">
+                    <td className="px-6 py-4 hidden md:table-cell">
                       <button
                         onClick={e=>HandleEditExam( { id: item.id,
                           questions_count: item.questions_count, title:
@@ -304,10 +304,10 @@ export default function Home() {
                         className="rounded text-yellow-400 text-white
                         text-3xl"><FaRegEdit /></button>
                     </td>
-                    <td className="px-6 py-4 hidden sm:table-cell">
+                    <td className="px-6 py-4 hidden md:table-cell">
                       <button onClick={e=>HandleDeleteExam(e, item.id)} className="rounded text-red-500 text-3xl"><MdDeleteForever /></button>
                     </td>
-                    <td className="px-6 py-3 sm:hidden ">
+                    <td className="px-6 py-3 md:hidden ">
                       <button onClick={_=>HandleShowDetails(item)} className="text-3xl text-blue-600"><CgMoreO /></button>
                     </td>
 

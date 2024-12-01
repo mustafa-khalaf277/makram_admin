@@ -49,8 +49,8 @@ export default function ExamsData() {
 
   useEffect(()=> {
     window.scrollTo({
-      x: 0,
-      y: 0,
+      left: 0,
+      top: 0,
       behavior: "smooth"
     })
     Questions(page, id).then(e => {

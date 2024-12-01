@@ -1,7 +1,8 @@
 import {
   useEffect,
   useState,
-  useRef
+  useRef,
+  useCallback
 } from "react"
 import {
   User_results
@@ -20,6 +21,11 @@ import {
 import {
   IoMdSearch
 } from "react-icons/io";
+
+import Swal from "sweetalert2"
+import {
+  FaList
+} from "react-icons/fa6";
 export default function Index() {
   const select = useRef()
   const next = useRef()
@@ -36,8 +42,8 @@ export default function Index() {
   } = useParams()
   useEffect(()=> {
     window.scrollTo({
-      x: 0,
-      y: 0,
+      top: 0,
+      left: 0,
       behavior: "smooth"
     })
     User_results(searchParams, id).then(e => {
@@ -59,20 +65,71 @@ export default function Index() {
     })
   }
 
-  const selectOptions = []
 
-
-  useEffect(()=> {
+  const handlePagination = useCallback(() => {
     if (data && data.total) {
-      select.current.innerHTML = ``
-      for (let i = 1; i < Math.ceil(data.total/15) +1; i++) {
-        select.current.innerHTML += `<option  ${ searchParams.get("page") &&
-        searchParams.get("page") == i?"selected": ""} value="${i}">${i}</option>`
+      let selectOptions = "";
+      for (let i = 1; i <= Math.ceil(data.total / 15); i++) {
+        selectOptions += `<option value="${i}" ${searchParams.get('page') === String(i) ? 'selected': ''}>${i}</option>`;
       }
+      select.current.innerHTML = selectOptions;
     }
-
   },
-    [data])
+    [data]);
+
+  useEffect(() => {
+    handlePagination();
+  },
+    [data]);
+  const HandleShowDetails = (data)=> {
+    console.log(data)
+    Swal.fire({
+      html: `
+      <div class="w-full text-right text-xl relative min-h-[200px]" >
+      <div class="md:hidden">
+      <span>الاسئلة المسلمة </span> :
+      <span class="font-medium text-black"> ${data.correct_answers}</span>
+      </div>
+      <div>
+      <div class="md:hidden">
+      <span>الدرجات</span> :
+      <span class="font-medium text-black"> ${data.exam_marks} </span>
+      </div>
+      <div class="md:hidden">
+      <span> النسبة </span> :
+      <span class="font-medium text-black">      %${(data.exam_marks/data.marks
+        * 100).toFixed(1)}</span>
+      </div>
+      <div class="md:hidden">
+      <span> حالة الامتحان</span> :
+      <span class="font-medium text-black">         ${data.Corrected === 1?"تم التصحيح": "غير مصحح"}</span>
+      </div>
+      <div class="md:hidden">
+      <span class="font-medium">
+      <span>حالة الامتحان </span>:
+      <span class=" px-2 mt-3 ">
+      <a class="text-black underline" href="${data.id}/${id}">عرض
+      النتيجة</a>
+
+      </span>
+
+      </div>
+      <div>
+      <span class="font-medium">
+      رقم هاتف الطالب :
+      <span class="text-black ">${data.phone}</span>
+      </span>
+      </div>
+      <div>
+      <span class="font-medium">
+      رقم هاتف ولى الامر:
+      <span class="text-black">${data.parent_phone}</span>
+      </span>
+      </div>
+      `
+    });
+  }
+
 
   const HandleButtons = e=> {
 
@@ -194,20 +251,23 @@ export default function Index() {
               <th scope="col" className="px-6 py-3  min-w-44 ">
                 اسم المستخدم
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 hidden md:table-cell">
                 الاسئله المسلمه
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 hidden md:table-cell">
                 الدرجه
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 hidden md:table-cell">
                 النسبه
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 hidden md:table-cell">
                 الحاله
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 hidden md:table-cell">
                 عرض الامتحان
+              </th>
+              <th scope="col" className="px-6 py-3 ">
+                معلومات
               </th>
             </tr>
           </thead>
@@ -218,22 +278,25 @@ export default function Index() {
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900">
                     {item.name}
                   </th>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden md:table-cell">
                     {item.correct_answers}
 
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden md:table-cell">
                     {item.exam_marks}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden md:table-cell">
                     {(item.exam_marks/item.marks * 100).toFixed(2)}%
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden md:table-cell">
                     {item.Corrected === 1?"تم التصحيح": "غير مصحح"}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 hidden md:table-cell">
                     <Link to={`${item.id}`} className="rounded text-blue-600
                       text-4xl flex justify-center"><BiLinkExternal /></Link>
+                  </td>
+                  <td className="px-6 py-4">
+                    <button onClick={_=>HandleShowDetails(item)} className="text-3xl text-blue-600"><FaList /></button>
                   </td>
                 </tr>
 
